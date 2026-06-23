@@ -1,0 +1,711 @@
+watch_stylesheet: true
+watch_config: true
+debug: false
+update_check: false
+system_colors: true
+komorebi:
+  start_command: komorebic start --whkd
+  stop_command: komorebic stop --whkd
+  reload_command: komorebic stop --whkd && komorebic start --whkd
+bars:
+  background-bar:
+    enabled: false
+    screens: ["**"]
+    class_name: "background-bar"
+    alignment:
+      position: "top"
+      align: center
+    blur_effect:
+      enabled: false
+      dark_mode: true
+      round_corners: false
+      border_color: None
+    window_flags:
+      always_on_top: false
+      windows_app_bar: false
+      hide_on_fullscreen: true
+    dimensions:
+      width: "100%"
+      height: 60
+  main-bar:
+    enabled: true
+    screens: ["primary"]
+    class_name: "primary-bar"
+    alignment:
+      position: "top"
+      align: center
+    blur_effect:
+      enabled: false
+      dark_mode: true
+      round_corners: false
+      border_color: None
+    window_flags:
+      always_on_top: true
+      windows_app_bar: true
+      hide_on_fullscreen: true
+    dimensions:
+      width: "100%"
+      height: 32
+    padding:
+      top: 0
+      left: 0
+      bottom: 0
+      right: 0
+    widgets:
+      left: 
+        [
+          "komorebi_workspaces", 
+          "komorebi_active_layout", 
+          "taskbar",
+          "quick_launch"
+        ]
+      center: ["clock"]
+      right:
+        [
+          "etc-grouper",
+          "systray",
+          "language",
+          "bluetooth",
+          "volume",
+          "wifi",
+          "battery",
+          "settings",
+          "notifications",
+        ]
+    layouts:
+      center:
+        alignment: center
+        stretch: false
+  secondary-bar:
+    enabled: true
+    screens: ["*"]
+    class_name: "secondary-bar"
+    alignment:
+      position: "top"
+      align: center
+    blur_effect:
+      enabled: false
+      dark_mode: true
+      round_corners: false
+      border_color: None
+    window_flags:
+      always_on_top: true
+      windows_app_bar: true
+      hide_on_fullscreen: true
+    dimensions:
+      width: "100%"
+      height: 32
+    padding:
+      top: 0
+      left: 0
+      bottom: 0
+      right: 0
+    widgets:
+      left: 
+        [
+          "komorebi_workspaces", 
+          "komorebi_active_layout", 
+          "taskbar",
+          "quick_launch"
+        ]
+      center: ["clock"]
+      right:
+        [
+          "systray",
+          "language",
+          "bluetooth",
+          "volume",
+          "wifi",
+          # "battery3",
+          # "battery2",
+          # "battery1",
+          # "batterylabel",
+          "battery"
+        ]
+    layouts:
+      center:
+        alignment: center
+        stretch: false
+  dock:
+    enabled: false
+    screens: ["**"]
+    class_name: "dock-bar"
+    alignment:
+      position: "bottom"
+      align: center
+    blur_effect:
+      enabled: true
+      dark_mode: true
+      round_corners: true
+      border_color: "system"
+    window_flags:
+      always_on_top: true
+      windows_app_bar: true
+      hide_on_fullscreen: true
+    dimensions:
+      width: "auto"
+      height: 48
+    padding:
+      top: 2
+      left: 0
+      bottom: 6
+      right: 0
+    widgets:
+      center: ["dock_widget", "quick_launch"]
+    layouts:
+      center:
+        alignment: center
+        stretch: false
+  top-bar:
+    enabled: true
+    screens: ["**"]
+    class_name: "top-bar"
+    alignment:
+      position: "top"
+      align: center
+    blur_effect:
+      enabled: false
+      dark_mode: true
+      round_corners: false
+      border_color: None
+    window_flags:
+      always_on_top: true
+      windows_app_bar: false
+    dimensions:
+      width: "100%"
+      height: 48
+  bottom-bar:
+    enabled: true
+    screens: ["**"]
+    class_name: "bottom-bar"
+    alignment:
+      position: "bottom"
+      align: center
+    blur_effect:
+      enabled: false
+      dark_mode: true
+      round_corners: false
+      border_color: None
+    window_flags:
+      always_on_top: true
+      windows_app_bar: false
+    dimensions:
+      width: "100%"
+      height: 48
+widgets:
+  windows_workspaces:
+    type: "yasb.windows_desktops.WorkspaceWidget"
+    options:
+      callbacks:
+        on_left: "activate_workspace"
+        on_middle: "do_nothing"
+        on_right: "toggle_context_menu"
+  komorebi_workspaces:
+    type: "komorebi.workspaces.WorkspaceWidget"
+    options:
+      label_offline: "Komorebi Offline"
+      label_workspace_btn: ""
+      label_workspace_active_btn: "{index}"
+      label_workspace_populated_btn: ""
+      label_default_name: "{index}"
+      label_zero_index: false
+      hide_empty_workspaces: false
+      hide_if_offline: true
+      toggle_workspace_layer:
+        enabled: false
+        tiling_label: "\udb81\ude40 Tiling"
+        floating_label: "\udb80\udd37 Floating"
+  komorebi_active_layout:
+    type: komorebi.active_layout.ActiveLayoutWidget
+    options:
+      hide_if_offline: true
+      label: "{icon}"
+      layouts:
+        [
+          "bsp",
+          "scrolling",
+          "grid",
+          "columns",
+          "rows",
+          "vertical_stack",
+          "horizontal_stack",
+        ]
+      layout_icons:
+        bsp: "\ue8f1"
+        columns: "\ue8ec"
+        rows: "\ue8f2"
+        grid: "\ue8f0"
+        scrolling: "\ue8eb"
+        vertical_stack: "\ue949"
+        horizontal_stack: "\ue42a"
+        ultrawide_vertical_stack: "\ue8ea"
+        right_main_vertical_stack: "\ue949"
+        monocle: "\uea10"
+        maximized: "\uea10"
+        floating: "\uf4c8"
+        paused: "\ue0ea"
+        tiling: "\uf3c1"
+      callbacks:
+        on_left: "toggle_layout_menu"
+        on_middle: "toggle_tiling"
+        on_right: "toggle_monocle"
+      layout_menu:
+        blur: true
+        round_corners: true
+        round_corners_type: "normal"
+        border_color: "none"
+        alignment: "right"
+        direction: "down"
+        show_layout_icons: true
+  taskbar:
+    type: "yasb.taskbar.TaskbarWidget"
+    options:
+      icon_size: 16
+      tooltip: true
+      show_only_visible: false
+      strict_filtering: false
+      monitor_exclusive: false
+      hide_empty: true
+      animation:
+        enabled: true
+      preview:
+        enabled: true
+        width: 240
+        delay: 400
+        padding: 8
+        margin: 8
+      title_label:
+        enabled: false
+        show: "always"
+        min_length: 10
+        max_length: 30
+      ignore_apps:
+        processes: []
+        titles: []
+        classes: []
+  dock_widget:
+    type: "yasb.taskbar.TaskbarWidget"
+    options:
+      # class_name: "dock-widget"
+      icon_size: 24
+      tooltip: true
+      show_only_visible: false
+      strict_filtering: false
+      monitor_exclusive: false
+      hide_empty: true
+      animation:
+        enabled: true
+      preview:
+        enabled: true
+        width: 240
+        delay: 400
+        padding: 8
+        margin: 8
+      title_label:
+        enabled: false
+        show: "always"
+        min_length: 10
+        max_length: 30
+      ignore_apps:
+        processes: []
+        titles: []
+        classes: []
+  quick_launch:
+    type: "yasb.quick_launch.QuickLaunchWidget"
+    options:
+      label: "\ue145"
+      search_placeholder: "Search..."
+      max_results: 80
+      show_icons: true
+      icon_size: 32
+      home_page: false
+      providers:
+        apps:
+          enabled: true
+          prefix: "*"
+          priority: 0
+          show_recent: true
+          max_recent: 25
+          show_description: true
+        calculator:
+          enabled: true
+          prefix: "*"
+          priority: 2
+        clipboard_history:
+          enabled: true
+          prefix: "v"
+          priority: 3
+          max_items: 100
+        emoji:
+          enabled: true
+          prefix: ":"
+          priority: 7
+        file_search:
+          enabled: true
+          prefix: "/"
+          priority: 8
+          backend: "auto"
+          show_path: true
+        kill_process:
+          enabled: true
+          prefix: "kill"
+          priority: 12
+        snippets:
+          enabled: true
+          prefix: ";"
+          priority: 15
+          type_delay: 200
+        system_commands:
+          enabled: true
+          prefix: ">"
+          priority: 16
+        settings:
+          enabled: true
+          prefix: "*"
+          priority: 14
+      popup:
+        width: 720
+        height: 480
+        blur: true
+        round_corners: true
+        round_corners_type: "normal"
+        border_color: "system"
+        dark_mode: true
+      callbacks:
+        on_left: "toggle_quick_launch"
+      keybindings:
+        - keys: "alt+space"
+          action: "toggle_quick_launch"
+  clock:
+    type: "yasb.clock.ClockWidget"
+    options:
+      label: "{%a, %b %d   %I:%M %p}"
+      label_alt: "{%A, %d %B %Y   %H:%M}"
+      timezones: []
+      update_interval: 1000
+      calendar:
+        alignment: "center"
+        blur: true
+        round_corners: true
+        round_corners_type: "normal"
+        border_color: "none"
+        direction: "down"
+        show_holidays: true
+        show_week_numbers: false
+        holiday_color: "#ff9f00"
+      callbacks:
+        on_left: "toggle_calendar"
+        on_middle: "do_nothing"
+        on_right: "do_nothing"
+  etc-grouper:
+    type: "yasb.grouper.GrouperWidget"
+    options:
+      class_name: "etc-grouper"
+      widgets: ["media", "wallpapers"]
+      collapse_options:
+        enabled: true
+        expanded_label: "\ue15b"
+        collapsed_label: "\ue145"
+        label_position: "left"
+  media:
+    type: "yasb.media.MediaWidget"
+    options:
+      label: "ㅤㅤ"
+      label_alt: "{title}{s}{artist}"
+      separator: " - "
+      hide_empty: true
+      callbacks:
+        on_left: "toggle_media_menu"
+        on_middle: "open_media_source"
+        on_right: "toggle_label"
+      max_field_size:
+        label: 20
+        label_alt: 36
+      show_thumbnail: true
+      controls_only: false
+      controls_left: false
+      controls_hide: false
+      thumbnail_alpha: 255
+      thumbnail_padding: 6
+      thumbnail_corner_radius: 8
+      symmetric_corner_radius: true
+      icons:
+        prev_track: "\ue045"
+        next_track: "\ue044"
+        play: "\ue1c4"
+        pause: "\ue1a2"
+      media_menu:
+        blur: true
+        round_corners: true
+        round_corners_type: "normal"
+        border_color: "system"
+        alignment: "right"
+        direction: "down"
+        offset_top: 6
+        offset_left: 0
+        thumbnail_corner_radius: 16
+        thumbnail_size: 120
+        max_title_size: 60
+        max_artist_size: 20
+        show_source: true
+      media_menu_icons:
+        play: "\ue1c4"
+        pause: "\ue1a2"
+        prev_track: "\ue045"
+        next_track: "\ue044"
+      scrolling_label:
+        enabled: false
+        update_interval_ms: 33
+        style: "left"
+        separator: " | "
+        label_padding: 0
+        always_scroll: false
+        ease_slope: 20
+        ease_pos: 0.8
+        ease_min: 0.5
+  wallpapers:
+    type: "yasb.wallpapers.WallpapersWidget"
+    options:
+      label: "<span>\ue3f7</span>"
+      # Example path to folder with images. Can be a single string or a list of strings.
+      # image_path: "C:\\Users\\{Username}\\Images" 
+      image_path: 
+        - "C:\\Users\\pixtelslinks\\Pictures\\Wallpapers"
+      change_automatically: false # Automatically change wallpaper
+      update_interval: 60 # If change_automatically is true, update interval in seconds
+      engine:
+        enabled: true
+        animation: "circle" # circle/slide_top/diamond/split
+      gallery:
+        enabled: true
+        blur: true
+        image_width: 220
+        image_per_page: 6
+        gallery_columns: 6 # 0 = auto, matches image_per_page for a single row
+        horizontal_position: "right" # left/center/right placement on screen
+        vertical_position: "top" # top/center/bottom placement
+        position_offset: 8 # minimum gap (px) from screen edges - see below for advanced options
+        respect_work_area: true # clamp to OS work area (avoids Windows taskbar)
+        show_buttons: true
+        orientation: "landscape"
+        image_spacing: 8
+        lazy_load: true
+        lazy_load_fadein: 400
+        image_corner_radius: 12
+      # run_after: # List of functions to run after wallpaper is updated
+        # - "wal -s -t -e -q -n -i {image}" # Example command to run after wallpaper is updated
+        # - "cmd.exe /c start /min pwsh ./yasb.ps1" # Example command to run after wallpaper is updated
+      callbacks:
+        on_left: "toggle_gallery"
+        on_middle: "do_nothing"
+        on_right: "change_wallpaper"
+  systray:
+    type: yasb.systray.SystrayWidget
+    options:
+      label_collapsed: "\ue313"
+      label_expanded: "\ue316"
+      label_position: "right"
+      icon_size: 16
+      pin_click_modifier: "alt"
+      show_unpinned: false
+      show_unpinned_button: true
+      show_in_popup: true
+      popup:
+        blur: true
+        round_corners: true
+        round_corners_type: "normal"
+        border_color: None
+        alignment: "center"
+        direction: "down"
+        offset_top: 6
+        offset_left: 0
+      show_battery: false
+      show_volume: false
+      show_network: false
+      tooltip: true
+  language:
+    type: yasb.language.LanguageWidget
+    options:
+      label: "<span>\uf028</span> {lang[country_code]}"
+      label_alt: "{lang[full_name]}"
+      update_interval: 5
+      callbacks:
+        on_left: "toggle_menu"
+        on_middle: "do_nothing"
+        on_right: "toggle_label"
+      language_menu:
+        blur: true
+        round_corners: true
+        round_corners_type: "normal"
+        border_color: "None"
+        alignment: "right"
+        direction: "down"
+        offset_top: 6
+        offset_left: 0
+        show_layout_icon: true
+        layout_icon: "\uf028"
+  bluetooth:
+    type: "yasb.bluetooth.BluetoothWidget"
+    options:
+      label: "<span style=\"text-align:center;\">{icon}</span>"
+      label_alt: "<span>{icon}</span> {device_name}"
+      label_no_device: "No devices connected"
+      label_device_separator: ", "
+      max_length: 10
+      max_length_ellipsis: "..."
+      icons: 
+        bluetooth_on: "ㅤ\ue1a7ㅤ"
+        bluetooth_off: ""
+        bluetooth_connected: "ㅤ\ue1a8ㅤ"
+      device_aliases:
+        - name: "WH-1000XM5"
+          alias: "\uf01f"
+      callbacks:
+        on_left: "toggle_label"
+        on_right: "exec cmd.exe /c start ms-settings:bluetooth"
+  volume:
+    type: "yasb.volume.VolumeWidget"
+    options:
+      label: "<span style=\"text-align:center;\">{icon}</span>"
+      icons:
+        - "\ue04f" # Icon for muted
+        - "\ue04e" # Icon for 0-10% volume
+        - "\ue04d" # Icon for 11-30% volume
+        - "\ue04d" # Icon for 31-60% volume
+        - "\ue050" # Icon for 61-100% volume
+      audio_menu:
+        blur: true
+        round_corners: true
+        round_corners_type: "normal"
+        border_color: "none"
+        alignment: "center"
+        direction: "down"
+        offset_top: 8
+        show_apps: true
+        show_app_labels: false
+        show_apps_expanded: true
+        app_icons:
+          toggle_down: "\ue313"
+          toggle_up: "\ue316"
+      callbacks:
+        on_right: "toggle_mute"
+  wifi:
+    type: "yasb.wifi.WifiWidget"
+    options:
+      label: "<span style=\"text-align:center;\">{wifi_icon}</span>"
+      label_alt: "{wifi_name} {wifi_strength}%"
+      update_interval: 5000
+      callbacks:
+        on_left: "toggle_menu"
+        on_middle: "exec cmd.exe /c start ms-settings:network"
+        on_right: "toggle_label"
+      ethernet_label: "<span>{wifi_icon}</span>"
+      ethernet_label_alt: "<span>{wifi_icon}</span>{ip_addr}"
+      ethernet_icon: "\ue8be"
+      get_exact_wifi_strength: false # Optional. Will require location access permission if true.
+      wifi_icons: [
+          "\uf0b0", # Icon for 0% strength
+          "\uebd6", # Icon for 1-24% strength
+          "\uebe1", # Icon for 25-49% strength
+          "\ue1ba", # Icon for 50-74% strength
+          "\ue1d8", # Icon for 75-100% strength
+        ]
+      menu_config:
+        blur: true
+        round_corners: true
+        round_corners_type: "normal"
+        border_color: "none"
+        alignment: "right"
+        direction: "down"
+        offset_top: 6
+        offset_left: 0
+        wifi_icons_secured: ["\uf58f", "\uf58e", "\uf58d", "\uf532"]
+        wifi_icons_unsecured: ["\uf0ef", "\uf0ef", "\uf0ef", "\uf0ef"]
+  # battery:
+  #   type: "yasb.battery.BatteryWidget"
+  #   options:
+  #     label: "<div style=\"text-align:center;\">{percent}</div> <span>{icon}</span>"
+  #     label_alt: "{time_remaining}, {power}W"
+  #     update_interval: 5000
+  #     time_remaining_natural: true
+  #     time_remaining_unlimited_icon: "\ueb3d"
+  #     hide_unsupported: false
+  #     charging_options:
+  #       icon_format: "{charging_icon}"
+  #       blink_charging_icon: true
+  #       blink_interval: 500
+  #     status_thresholds:
+  #       critical: 50
+  #       low: 64
+  #       medium: 80
+  #       high: 99
+  #       full: 100
+  #     status_icons:
+  #       icon_charging: "\uea0b"
+  #       icon_critical: ""
+  #       icon_low: ""
+  #       icon_medium: ""
+  #       icon_high: ""
+  #       icon_full: ""
+  battery:
+    type: "yasb.battery.BatteryWidget"
+    options:
+      label: "<div style=\"text-align:center;\">{percent}</div><span>{icon}</span>"
+      label_alt: "{time_remaining}, {power}W"
+      update_interval: 5000
+      time_remaining_natural: true
+      hide_unsupported: True
+      charging_options:
+        icon_format: "{charging_icon}"
+        blink_charging_icon: true
+        blink_interval: 500
+      status_thresholds:
+        critical: 10
+        low: 25
+        medium: 75
+        high: 97
+        full: 100
+      status_icons:
+        icon_charging: "\uea0b"
+        icon_critical: "\ueb58"
+        icon_low: "\ueb58"
+        icon_medium: "\ueb58"
+        icon_high: "\ueb58"
+        icon_full: "\ueb58"
+      progress_bar: 
+        enabled: true
+        progress_type: "linear_horizontal"
+        size: 25
+        thickness: 14
+        radius: 4
+        color: "#f0f0ff"
+        background_color: "#a0a0aa"
+  custom_battery:
+    type: "yasb.custom.CustomWidget"
+    options:
+      label: ""
+      class_name: "custom-battery-widget"
+      exec_options:
+        run_cmd: "powershell ~\\.config\\yasb\\batterywidget.ps1"
+        run_interval: 300000 # run every 5 min
+        return_format: "string"
+        hide_empty: false
+      callbacks:
+        on_left: "do_nothing"
+  settings:
+    type: "yasb.applications.ApplicationsWidget"
+    options:
+      label: "<div style=\"text-align:center;\">{data}</div>"
+      app_list:
+        - {icon: "\ue018", launch: "quick_settings"}
+  notifications:
+    type: "yasb.notifications.NotificationsWidget"
+    options:
+      label: "<span>{icon}</span><div style=\"text-align:center;\">{count}</div>"
+      label_alt: "{count} notifications"
+      hide_empty: false
+      tooltip: true
+      icons: {"new": "\uf189", "default": "\ue0ca"}
+      callbacks:
+        on_left: "toggle_notification"
+        on_right: "do_nothing"

@@ -1,0 +1,5 @@
+*.log
+*.bak
+*.backup
+.env
+yasb_colors.css
